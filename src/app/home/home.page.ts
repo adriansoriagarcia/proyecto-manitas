@@ -18,9 +18,9 @@ export class HomePage {
    }];
 
    obtenerListaReparaciones(){
-    this.firestoreService.consultar("reparaciones").subscribe((resultadoConsultaTareas) => {
+    this.firestoreService.consultar("reparaciones").subscribe((resultadoConsultaReparaciones) => {
       this.arrayColeccionReparaciones = [];
-      resultadoConsultaTareas.forEach((datosReparacion: any) => {
+      resultadoConsultaReparaciones.forEach((datosReparacion: any) => {
         this.arrayColeccionReparaciones.push({
           id: datosReparacion.payload.doc.id,
           data: datosReparacion.payload.doc.data()
