@@ -1,0 +1,7 @@
+{
+  "name": "proyecto-manitas",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

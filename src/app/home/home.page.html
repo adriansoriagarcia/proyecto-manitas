@@ -1,0 +1,57 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Proyecto manitas
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-item>
+    <ion-label>Nombre Cliente</ion-label>
+    <ion-input [(ngModel)]="reparacionEditando.nombre"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Fecha prevista reparación</ion-label>
+    <ion-input [(ngModel)]="reparacionEditando.fecha"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Lugar de la reparación</ion-label>
+    <ion-input [(ngModel)]="reparacionEditando.lugar"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Imagenes de la averia</ion-label>
+    <ion-input [(ngModel)]="reparacionEditando.imagen"></ion-input>
+  </ion-item>
+  <ion-button color="light" (click)="clicBotonInsertar()">
+    <ion-icon name="add-circle-outline"></ion-icon>Añadir reparación</ion-button>
+  <h1>LISTA DE REPARACIONES</h1>
+  <ion-list > 
+    <ion-button color="light" (click)="clicBotonModificar()">
+      <ion-icon name="layers-outline"></ion-icon>Modificar reparación</ion-button>
+    <ion-button color="light" (click)="clicBotonBorrar()">
+      <ion-icon name="trash-outline"></ion-icon>Borrar reparación</ion-button>
+    <ion-item *ngFor="let documentReparacion of arrayColeccionReparaciones"  (click)="selecReparacion(documentReparacion)" >
+      <ion-grid class="fondo">
+        <ion-col>
+          <ion-card class="tarjetas">
+            <ion-card-content>
+              <ion-row>
+                <h2>{{documentReparacion.data.nombre}}</h2>
+              </ion-row>
+              <ion-row>
+                <p>{{documentReparacion.data.fecha}}</p>
+              </ion-row>
+              <ion-row>
+                <p>{{documentReparacion.data.lugar}}</p>
+              </ion-row>
+              <ion-row>
+                <img class="imagenes" src="{{documentReparacion.data.imagen}}">
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+</ion-content>
