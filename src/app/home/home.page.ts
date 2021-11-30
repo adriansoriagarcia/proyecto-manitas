@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FirestoreService } from '../firestore.service';
 import { Reparacion } from '../reparacion';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -29,8 +30,9 @@ export class HomePage {
     });
   }
 
-  constructor(private firestoreService: FirestoreService) {
+  constructor(private firestoreService: FirestoreService, private router:Router) {
     // Crear una reparacion vacía
+    this.obtenerListaReparaciones();
     this.reparacionEditando = {} as Reparacion;
   }
 
@@ -54,7 +56,7 @@ export class HomePage {
     this.reparacionEditando.fecha = reparacionSelec.data.fecha;
     this.reparacionEditando.lugar = reparacionSelec.data.lugar;
     this.reparacionEditando.imagen = reparacionSelec.data.imagen;
-    //this.router.navigate(['/detalle', this.idReparacionSelec]);
+    this.router.navigate(['/detalle', this.idReparacionSelec]);
   }
 
   clicBotonBorrar() {

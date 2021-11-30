@@ -25,3 +25,28 @@
 #container a {
   text-decoration: none;
 }
+
+.imagenes {
+  height: 150px;
+  width: 200px;
+}
+
+.fondo {
+  background-color: #2980B9;
+}
+
+.tarjetas {
+  width: 30%;
+  background-color: #D5DBDB;
+  color: black;
+}
+
+.botones {
+  background-color: rgb(139, 139, 139);
+}
+
+ion-content{ --ion-background-color:#2980B9; }
+
+ion-header{
+   --ion-background-color:#1A5276; 
+  }
