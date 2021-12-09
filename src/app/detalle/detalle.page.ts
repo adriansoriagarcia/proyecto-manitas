@@ -1,19 +1,39 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute } from '@angular/router';
+import { Reparacion } from '../reparacion';
 
 @Component({
   selector: 'app-detalle',
   templateUrl: './detalle.page.html',
   styleUrls: ['./detalle.page.scss'],
 })
+
 export class DetallePage implements OnInit {
 
   id:string="";
 
-  constructor(private activedRoute: ActivatedRoute) { }
+  document: any = {
+    id: "",
+    data: {} as Reparacion
+  };
+
+  this.firestoreService.consultarPorId("reparaciones", id).subscribe((resultado) => {
+    // Preguntar si se hay encontrado un document con ese ID
+    if(resultado.payload.data() != null) {
+      this.document.id = resultado.payload.id
+      this.document.data = resultado.payload.data();
+      // Como ejemplo, mostrar el nombre del cliente en consola
+      console.log(this.document.data.nombre);
+    } else {
+      // No se ha encontrado un document con ese ID. Vaciar los datos que hubiera
+      this.document.data = {} as Reparacion;
+    } 
+  });
+
+  constructor(private activatedRoute: ActivatedRoute) { };
 
   ngOnInit() {
-    this.id = this.activedRoute.snapshot.paramMap.get('id')
+    this.id = this.activatedRoute.snapshot.paramMap.get('id')
   }
 
 }
