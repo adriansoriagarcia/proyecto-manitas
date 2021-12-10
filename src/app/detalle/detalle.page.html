@@ -6,20 +6,20 @@
 
 <ion-content [fullscreen]="true">
   <ion-item>
-    <ion-label>Nombre Cliente</ion-label>
-    <ion-input ></ion-input>
+    <ion-label>Nombre Cliente </ion-label>
+    <ion-input [(ngModel)]="document.data.nombre"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label>Fecha prevista reparación</ion-label>
-    <ion-input ></ion-input>
+    <ion-input [(ngModel)]="document.data.fecha"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label>Lugar de la reparación</ion-label>
-    <ion-input ></ion-input>
+    <ion-input [(ngModel)]="document.data.lugar"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label>Imagenes de la averia</ion-label>
-    <ion-input ></ion-input>
+    <ion-input [(ngModel)]="document.data.imagen"></ion-input>
   </ion-item>
   <ion-button color="light" (click)="clicBotonInsertar()">
     <ion-icon name="add-circle-outline"></ion-icon>Añadir reparación</ion-button>
@@ -29,5 +29,4 @@
     <ion-button color="light" (click)="clicBotonBorrar()">
       <ion-icon name="trash-outline"></ion-icon>Borrar reparación</ion-button>
   </ion-list>
-  <p> Título: {{ document.data.nombre }} </p>
 </ion-content>

@@ -18,9 +18,14 @@ export class DetallePage implements OnInit {
     data: {} as Reparacion
   };
 
-  
 
   constructor(private activatedRoute: ActivatedRoute, private firestoreService: FirestoreService) {
+    console.log(this.id)
+    
+   };
+
+  ngOnInit() {
+    this.id = this.activatedRoute.snapshot.paramMap.get('id')
     this.firestoreService.consultarPorId("reparaciones", this.id).subscribe((resultado) => {
       // Preguntar si se hay encontrado un document con ese ID
       if(resultado.payload.data() != null) {
@@ -33,10 +38,10 @@ export class DetallePage implements OnInit {
         this.document.data = {} as Reparacion;
       } 
     });
-   };
-
-  ngOnInit() {
-    this.id = this.activatedRoute.snapshot.paramMap.get('id')
   }
+
+ 
+
+  
 
 }
