@@ -18,7 +18,6 @@ export class DetallePage implements OnInit {
     data: {} as Reparacion
   };
 
-
   constructor(private activatedRoute: ActivatedRoute, private firestoreService: FirestoreService) {
     console.log(this.id)
     
@@ -39,9 +38,5 @@ export class DetallePage implements OnInit {
       } 
     });
   }
-
- 
-
-  
 
 }

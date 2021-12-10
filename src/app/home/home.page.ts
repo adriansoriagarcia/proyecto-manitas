@@ -34,15 +34,20 @@ export class HomePage {
     // Crear una reparacion vacía
     this.obtenerListaReparaciones();
     this.reparacionEditando = {} as Reparacion;
+    
   }
 
   clicBotonInsertar() {
     this.firestoreService.insertar("reparaciones", this.reparacionEditando).then(() => {
-      console.log('Tarea creada correctamente!');
+      console.log('Reparación creada correctamente!');
       this.reparacionEditando= {} as Reparacion;
     }, (error) => {
       console.error(error);
     });
+  }
+
+  abrirSegundaPag() {
+    this.router.navigate(['/detalle']);
   }
 
 
