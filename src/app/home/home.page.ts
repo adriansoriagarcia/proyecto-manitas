@@ -46,9 +46,6 @@ export class HomePage {
     });
   }
 
-  abrirSegundaPag() {
-    this.router.navigate(['/detalle']);
-  }
 
 
   idReparacionSelec: string;
