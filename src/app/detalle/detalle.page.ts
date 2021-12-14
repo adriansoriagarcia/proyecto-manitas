@@ -47,7 +47,7 @@ export class DetallePage implements OnInit {
    };
 
    clicBotonInsertar() {
-    this.firestoreService.insertar("reparaciones", this.reparacionEditando).then(() => {
+    this.firestoreService.insertar("reparaciones", this.document.data).then(() => {
       console.log('Reparación creada correctamente!');
       this.reparacionEditando= {} as Reparacion;
     }, (error) => {
@@ -71,11 +71,8 @@ export class DetallePage implements OnInit {
     });
   }
 
-  idReparacionSelec: string;
-
-
   clicBotonBorrar() {
-    this.firestoreService.borrar("reparaciones", this.idReparacionSelec).then(() => {
+    this.firestoreService.borrar("reparaciones", this.document.id).then(() => {
       // Actualizar la lista completa
       this.obtenerListaReparaciones();
       // Limpiar datos de pantalla
@@ -84,7 +81,7 @@ export class DetallePage implements OnInit {
   }
 
   clicBotonModificar() {
-    this.firestoreService.actualizar("reparaciones", this.idReparacionSelec, this.reparacionEditando).then(() => {
+    this.firestoreService.actualizar("reparaciones", this.document.id, this.document.data).then(() => {
       // Actualizar la lista completa
       this.obtenerListaReparaciones();
       // Limpiar datos de pantalla
