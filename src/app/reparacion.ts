@@ -3,4 +3,5 @@ export interface Reparacion {
     fecha: string;
     lugar: string;
     imagen: string;
+    precio: string;
 }

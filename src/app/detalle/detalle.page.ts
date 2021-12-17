@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute } from '@angular/router';
 import { Reparacion } from '../reparacion';
 import { FirestoreService } from '../firestore.service';
+import { AlertController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-detalle',
@@ -39,7 +41,7 @@ export class DetallePage implements OnInit {
     });
   }
 
-  constructor(private activatedRoute: ActivatedRoute, private firestoreService: FirestoreService) {
+  constructor(private activatedRoute: ActivatedRoute, private firestoreService: FirestoreService, public alertController: AlertController) {
     console.log(this.id)
     this.reparacionEditando = {} as Reparacion;
     this.obtenerListaReparaciones();
@@ -72,23 +74,45 @@ export class DetallePage implements OnInit {
   }
 
   clicBotonBorrar() {
-    this.firestoreService.borrar("reparaciones", this.document.id).then(() => {
-      // Actualizar la lista completa
-      this.obtenerListaReparaciones();
-      // Limpiar datos de pantalla
-      this.reparacionEditando = {} as Reparacion;
-    })
+    this.alertController.create({
+      header: 'ALERTA',
+      subHeader: '¡Estas a punto de borrar una reparación!',
+      message: 'Si deseas borrar una reparacion pulse si, en caso contrario pulse no',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            console.log('nunca');
+          }
+        },
+        {
+          text: 'Si!',
+          handler: () => {
+            console.log('si');
+            this.firestoreService.borrar("reparaciones", this.document.id).then(() => {
+              // Actualizar la lista completa
+              this.obtenerListaReparaciones();
+              console.log('Reparación borrada correctamente!');
+              // Limpiar datos de pantalla
+              this.reparacionEditando = {} as Reparacion;
+          })
+        }
+        }
+      ]
+    }).then(res => {
+      res.present();
+    });
+    
   }
 
   clicBotonModificar() {
     this.firestoreService.actualizar("reparaciones", this.document.id, this.document.data).then(() => {
       // Actualizar la lista completa
       this.obtenerListaReparaciones();
+      console.log('Reparación modificada correctamente!');
       // Limpiar datos de pantalla
       this.reparacionEditando = {} as Reparacion;
     })
   }
-
-  
 
 }

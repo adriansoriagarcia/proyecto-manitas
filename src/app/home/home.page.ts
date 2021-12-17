@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class HomePage {
 
   reparacionEditando: Reparacion; 
+  filtro: string = '';
   
 
   arrayColeccionReparaciones: any = [{
@@ -57,6 +58,7 @@ export class HomePage {
     this.reparacionEditando.nombre = reparacionSelec.data.nombre;
     this.reparacionEditando.fecha = reparacionSelec.data.fecha;
     this.reparacionEditando.lugar = reparacionSelec.data.lugar;
+    this.reparacionEditando.lugar = reparacionSelec.data.precio;
     this.reparacionEditando.imagen = reparacionSelec.data.imagen;
     this.router.navigate(['/detalle', this.idReparacionSelec]);
   }

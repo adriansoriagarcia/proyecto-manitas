@@ -18,15 +18,19 @@
     <ion-input [(ngModel)]="document.data.lugar"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label>Imagenes de la averia</ion-label>
+    <ion-label>Precio de la reparación</ion-label>
+    <ion-input [(ngModel)]="document.data.precio"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Imágenes de la averia</ion-label>
     <ion-input [(ngModel)]="document.data.imagen"></ion-input>
   </ion-item>
-  <ion-button color="light" (click)="clicBotonInsertar()">
+  <ion-button color="light" (click)="clicBotonInsertar()" *ngIf="this.document.id == ''">
     <ion-icon name="add-circle-outline"></ion-icon>Añadir reparación</ion-button>
   <ion-list > 
-    <ion-button color="light" (click)="clicBotonModificar()">
+    <ion-button color="light" (click)="clicBotonModificar()" *ngIf="this.document.id == this.id">
       <ion-icon name="layers-outline"></ion-icon>Modificar reparación</ion-button>
-    <ion-button color="light" (click)="clicBotonBorrar()">
+    <ion-button color="light" (click)="clicBotonBorrar()" *ngIf="this.document.id == this.id">
       <ion-icon name="trash-outline"></ion-icon>Borrar reparación</ion-button>
   </ion-list>
 </ion-content>
