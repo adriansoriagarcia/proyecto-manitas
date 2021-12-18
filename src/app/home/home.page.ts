@@ -51,6 +51,11 @@ export class HomePage {
 
   idReparacionSelec: string;
 
+  pasarSegudaPantalla () {
+    this.router.navigate(['detalle/:id'])
+  }
+
+
   selecReparacion(reparacionSelec) {
     console.log("Reparacion seleccionada: ");
     console.log(reparacionSelec);

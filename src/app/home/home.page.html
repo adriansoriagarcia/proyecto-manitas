@@ -10,12 +10,12 @@
   <ion-input [(ngModel)]="filtro" placeholder="Introduce los datos del filtro"></ion-input>
   <h1>LISTA DE REPARACIONES</h1>
     <ion-fab vertical="bottom" horizontal="end" color="primary" slot="fixed">
-      <ion-fab-button href="../detalle/detalle.page.html"><ion-icon name="add-circle-outline"></ion-icon></ion-fab-button>
+      <ion-fab-button (click)="pasarSegudaPantalla()"><ion-icon name="add-circle-outline"></ion-icon></ion-fab-button>
     </ion-fab>
       <ion-grid class="contenido">
       <ion-row>
         <ng-container *ngFor="let documentReparacion of arrayColeccionReparaciones">
-        <ion-col *ngIf="filtro == '' || documentReparacion.data.nombre.includes(filtro)|| documentReparacion.data.fecha.startsWith(filtro) " size-xl="2" size-lg="2" size-md="4" size-sm="6" size-xs="12">
+        <ion-col *ngIf="filtro === '' || documentReparacion.data.nombre.includes(filtro)|| documentReparacion.data.fecha.startsWith(filtro) " size-xl="2" size-lg="2" size-md="4" size-sm="6" size-xs="12">
           <ion-card class="tarjetas"  (click)="selecReparacion(documentReparacion)">
             <ioncard-content>
                 <h2>Nombre: {{documentReparacion.data.nombre}}</h2>

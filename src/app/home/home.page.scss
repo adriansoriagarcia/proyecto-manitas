@@ -37,12 +37,10 @@
 
 .tarjetas {
   //width: 30%;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.774);
   color: black;
 }
-h1 {
-  color: white;
-}
+
 
 .botones {
   background-color: rgb(139, 139, 139);
@@ -53,4 +51,8 @@ ion-content{ --ion-background-color:#63a4ff; }
 ion-header{
    --ion-background-color:#3364FF; 
   }
+ion-fab-button {
+  --color:black;
+}
+
  

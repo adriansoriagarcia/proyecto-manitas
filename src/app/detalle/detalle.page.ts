@@ -86,7 +86,7 @@ export class DetallePage implements OnInit {
           }
         },
         {
-          text: 'Si!',
+          text: 'Si',
           handler: () => {
             console.log('si');
             this.firestoreService.borrar("reparaciones", this.document.id).then(() => {
