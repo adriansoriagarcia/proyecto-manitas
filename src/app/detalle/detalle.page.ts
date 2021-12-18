@@ -22,8 +22,6 @@ export class DetallePage implements OnInit {
     data: {} as Reparacion
   };
 
-
-
   arrayColeccionReparaciones: any = [{
     id: "",
     data: {} as Reparacion

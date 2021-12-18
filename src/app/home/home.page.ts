@@ -13,7 +13,6 @@ export class HomePage {
   reparacionEditando: Reparacion; 
   filtro: string = '';
   
-
   arrayColeccionReparaciones: any = [{
     id: "",
     data: {} as Reparacion
@@ -38,17 +37,6 @@ export class HomePage {
     
   }
 
-  clicBotonInsertar() {
-    this.firestoreService.insertar("reparaciones", this.reparacionEditando).then(() => {
-      console.log('Reparación creada correctamente!');
-      this.reparacionEditando= {} as Reparacion;
-    }, (error) => {
-      console.error(error);
-    });
-  }
-
-
-
   idReparacionSelec: string;
 
   pasarSegudaPantalla () {
@@ -66,24 +54,6 @@ export class HomePage {
     this.reparacionEditando.lugar = reparacionSelec.data.precio;
     this.reparacionEditando.imagen = reparacionSelec.data.imagen;
     this.router.navigate(['/detalle', this.idReparacionSelec]);
-  }
-
-  clicBotonBorrar() {
-    this.firestoreService.borrar("reparaciones", this.idReparacionSelec).then(() => {
-      // Actualizar la lista completa
-      this.obtenerListaReparaciones();
-      // Limpiar datos de pantalla
-      this.reparacionEditando = {} as Reparacion;
-    })
-  }
-
-  clicBotonModificar() {
-    this.firestoreService.actualizar("reparaciones", this.idReparacionSelec, this.reparacionEditando).then(() => {
-      // Actualizar la lista completa
-      this.obtenerListaReparaciones();
-      // Limpiar datos de pantalla
-      this.reparacionEditando = {} as Reparacion;
-    })
   }
 
 }
