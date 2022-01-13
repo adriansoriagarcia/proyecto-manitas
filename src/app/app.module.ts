@@ -11,7 +11,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from '../environments/environment';
 
-import { ImagePicker } from '@awesome-cordova-plugins/image-picker/ngx';
+//import { ImagePicker } from '@awesome-cordova-plugins/image-picker/ngx';
 
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
@@ -23,7 +23,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     AngularFireStorageModule,
     AngularFirestoreModule],
   providers: [
-    ImagePicker,
+    //ImagePicker
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
