@@ -42,6 +42,8 @@ export class DetallePage implements OnInit {
     });
   }
 
+  imageURL: String;
+
   constructor(private activatedRoute: ActivatedRoute,
     private firestoreService: FirestoreService,
     public alertController: AlertController,
@@ -182,12 +184,17 @@ export class DetallePage implements OnInit {
       });
   }
 
-  async deleteFile(downloadUrl) {
+  private borrarImagen() {
+    this.deleteFile(this.imageURL);
+    this.imageURL = null;
+  }
+
+  async deleteFile(fileURL) {
     const toast = await this.toastController.create({
       message: 'File was deleted successfully',
       duration: 3000
     });
-    this.firestoreService.deleteFileFromURL(downloadUrl)
+    this.firestoreService.deleteFileFromURL(fileURL)
       .then(() => {
         toast.present();
       }, (err) => {

@@ -29,11 +29,11 @@
   </ion-item>
   <ion-item>
     <ion-label>Imágenes</ion-label>
-    <img class="imagenes" src="{{document.data.imagen}}">
+    <img class="imagenes" src="{{document.data.imagen}}" *ngIf="this.document.imagen != ''">
   </ion-item>
   <ion-button color="light" (click)="uploadImagePicker()">
     <ion-icon name="add"></ion-icon></ion-button>
-  <ion-button color="light" (click)="deleteFile()">
+  <ion-button color="light" (click)="borrarImagen()">
     <ion-icon name="close"></ion-icon></ion-button>
   <ion-button color="light" (click)="clicBotonInsertar()" *ngIf="this.document.id == ''">
     <ion-icon name="add-circle-outline"></ion-icon>Añadir reparación</ion-button>
