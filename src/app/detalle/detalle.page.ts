@@ -22,7 +22,7 @@ export class DetallePage implements OnInit {
 
   document: any = {
     id: "",
-    data: {} as Reparacion
+    data: {} as Reparacion,
   };
 
   arrayColeccionReparaciones: any = [{
@@ -163,6 +163,7 @@ export class DetallePage implements OnInit {
                     .then(downloadUrl => {
                       //En la variable downloadUrl se tiene la direccion de descarga de la imágen
                       console.log("downloadURL:" + downloadUrl);
+                      this.document.data.imagen=downloadUrl;
                       //Mostrar el mensaje de finalización de la subida
                       toast.present();
                       //ocultar mensaje de espera
@@ -181,12 +182,12 @@ export class DetallePage implements OnInit {
       });
   }
 
-  async deleteFile(fileURL) {
+  async deleteFile(downloadUrl) {
     const toast = await this.toastController.create({
       message: 'File was deleted successfully',
       duration: 3000
     });
-    this.firestoreService.deleteFileFromURL(fileURL)
+    this.firestoreService.deleteFileFromURL(downloadUrl)
       .then(() => {
         toast.present();
       }, (err) => {

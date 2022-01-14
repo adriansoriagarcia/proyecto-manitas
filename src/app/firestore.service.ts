@@ -39,8 +39,8 @@ export class FirestoreService {
     return storageRef.putString("data:image/jpeg;base64," + imagenBase64, 'data_url')
   }
 
-  public deleteFileFromURL (fileURL) {
-    return this.angularFireStorage.storage.refFromURL(fileURL).delete();
+  public deleteFileFromURL (downloadUrl) {
+    return this.angularFireStorage.storage.refFromURL(downloadUrl).delete();
   }
 
  

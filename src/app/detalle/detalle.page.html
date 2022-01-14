@@ -28,11 +28,13 @@
     <ion-input [(ngModel)]="document.data.precio"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label>Imágenes de la averia</ion-label>
-    <ion-input [(ngModel)]="document.data.imagen"></ion-input>
+    <ion-label>Imágenes</ion-label>
+    <img class="imagenes" src="{{document.data.imagen}}">
   </ion-item>
-  <ion-button color="light" (click)="uploadImagePicker()">Añadir imágen</ion-button>
-  <ion-button color="light" (click)="deleteFile()">Eliminar imágen</ion-button>
+  <ion-button color="light" (click)="uploadImagePicker()">
+    <ion-icon name="add"></ion-icon></ion-button>
+  <ion-button color="light" (click)="deleteFile()">
+    <ion-icon name="close"></ion-icon></ion-button>
   <ion-button color="light" (click)="clicBotonInsertar()" *ngIf="this.document.id == ''">
     <ion-icon name="add-circle-outline"></ion-icon>Añadir reparación</ion-button>
   <ion-list > 
