@@ -33,14 +33,14 @@ export class FirestoreService {
     return this.angularFirestore.collection(coleccion).doc(documentId).snapshotChanges();
   }
 
-  public uploadImage (nombreCarpeta, nombreArchivo, imagenBase64) {
+  public uploadImage (imagenes, nombreArchivo, imagenBase64) {
     let storageRef =
-    this.angularFireStorage.ref(nombreCarpeta).child(nombreArchivo);
+    this.angularFireStorage.ref(imagenes).child(nombreArchivo);
     return storageRef.putString("data:image/jpeg;base64," + imagenBase64, 'data_url')
   }
 
   public deleteFileFromURL (fileURL) {
-    return this.angularFireStorage.storage.refFromURL(fileURL).delete;
+    return this.angularFireStorage.storage.refFromURL(fileURL).delete();
   }
 
  

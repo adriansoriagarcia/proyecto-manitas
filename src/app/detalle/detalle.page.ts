@@ -5,7 +5,7 @@ import { FirestoreService } from '../firestore.service';
 import { AlertController } from '@ionic/angular';
 
 import { LoadingController, ToastController } from '@ionic/angular';
-//import { ImagePicker } from '@awesome-cordova-plugins/image-picker/ngx';
+import { ImagePicker } from '@awesome-cordova-plugins/image-picker/ngx';
 
 
 @Component({
@@ -46,8 +46,8 @@ export class DetallePage implements OnInit {
     private firestoreService: FirestoreService,
     public alertController: AlertController,
     private loadingController: LoadingController,
-    private toastController: ToastController
-    //private imagePicker: ImagePicker
+    private toastController: ToastController,
+    private imagePicker: ImagePicker
     ) {
     console.log(this.id)
     this.reparacionEditando = {} as Reparacion;
@@ -122,7 +122,7 @@ export class DetallePage implements OnInit {
     })
   }
 
-  /*async uploadImagePicker() {
+  async uploadImagePicker() {
     //Mensaje de espera mientras se sube la imagen
     const loading = await this.loadingController.create({
       message: 'Please waiut...'
@@ -179,9 +179,9 @@ export class DetallePage implements OnInit {
       }, (err) => {
         console.log(err);
       });
-  }*/
+  }
 
-  /*async deleteFile(fileURL) {
+  async deleteFile(fileURL) {
     const toast = await this.toastController.create({
       message: 'File was deleted successfully',
       duration: 3000
@@ -192,5 +192,5 @@ export class DetallePage implements OnInit {
       }, (err) => {
         console.log(err);
       });
-  }*/
+  }
 }
