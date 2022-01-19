@@ -29,7 +29,7 @@
   </ion-item>
   <ion-item>
     <ion-label>Imágenes</ion-label>
-    <img class="imagenes" src="{{document.data.imagen}}">
+    <img class="imagenes" src="{{document.data.imagen}}" *ngIf="this.document.imagen != ''">
   </ion-item>
   <ion-button color="light" (click)="uploadImagePicker()">
     <ion-icon name="add"></ion-icon></ion-button>
