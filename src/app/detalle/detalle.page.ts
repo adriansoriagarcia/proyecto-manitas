@@ -19,6 +19,7 @@ export class DetallePage implements OnInit {
   reparacionEditando: Reparacion; 
 
   id:string="";
+  imageURL: String;
 
   document: any = {
     id: "",
@@ -164,6 +165,7 @@ export class DetallePage implements OnInit {
                       //En la variable downloadUrl se tiene la direccion de descarga de la imágen
                       console.log("downloadURL:" + downloadUrl);
                       this.document.data.imagen=downloadUrl;
+                      this.imageURL = downloadUrl;
                       //Mostrar el mensaje de finalización de la subida
                       toast.present();
                       //ocultar mensaje de espera
@@ -182,13 +184,20 @@ export class DetallePage implements OnInit {
       });
   }
 
-  async deleteFile(downloadUrl) {
+  private borrarImagen() {
+    this.deleteFile(this.imageURL);
+    this.imageURL = null;
+  }
+
+  async deleteFile(fileURL) {
+    console.log("entra en delete")
     const toast = await this.toastController.create({
       message: 'File was deleted successfully',
       duration: 3000
     });
-    this.firestoreService.deleteFileFromURL(downloadUrl)
+    this.firestoreService.deleteFileFromURL(fileURL)
       .then(() => {
+        this.document.data.imagen = "";
         toast.present();
       }, (err) => {
         console.log(err);
