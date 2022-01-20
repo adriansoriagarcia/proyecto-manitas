@@ -4,6 +4,8 @@ import { Reparacion } from '../reparacion';
 import { FirestoreService } from '../firestore.service';
 import { AlertController } from '@ionic/angular';
 
+import { Router } from '@angular/router';
+
 import { LoadingController, ToastController } from '@ionic/angular';
 import { ImagePicker } from '@awesome-cordova-plugins/image-picker/ngx';
 
@@ -20,6 +22,7 @@ export class DetallePage implements OnInit {
 
   id:string="";
   imageURL: String;
+
 
   document: any = {
     id: "",
@@ -48,7 +51,8 @@ export class DetallePage implements OnInit {
     public alertController: AlertController,
     private loadingController: LoadingController,
     private toastController: ToastController,
-    private imagePicker: ImagePicker
+    private imagePicker: ImagePicker,
+    private router:Router
     ) {
     console.log(this.id)
     this.reparacionEditando = {} as Reparacion;
@@ -56,10 +60,15 @@ export class DetallePage implements OnInit {
     
    };
 
+   pasarPrimeraPantalla () {
+    this.router.navigate(['home'])
+  }
+
    clicBotonInsertar() {
     this.firestoreService.insertar("reparaciones", this.document.data).then(() => {
       console.log('Reparación creada correctamente!');
       this.reparacionEditando= {} as Reparacion;
+      this.pasarPrimeraPantalla();
     }, (error) => {
       console.error(error);
     });
@@ -73,10 +82,11 @@ export class DetallePage implements OnInit {
         this.document.id = resultado.payload.id
         this.document.data = resultado.payload.data();
         // Como ejemplo, mostrar el nombre del cliente en consola
-        console.log(this.document.data.nombre);
+        console.log(this.document.data.nombre + this.document.data.imagen);
       } else {
         // No se ha encontrado un document con ese ID. Vaciar los datos que hubiera
         this.document.data = {} as Reparacion;
+        console.log(this.document.data.imagen)
       } 
     });
   }
@@ -103,6 +113,7 @@ export class DetallePage implements OnInit {
               console.log('Reparación borrada correctamente!');
               // Limpiar datos de pantalla
               this.reparacionEditando = {} as Reparacion;
+              this.pasarPrimeraPantalla();
           })
         }
         }
@@ -120,6 +131,7 @@ export class DetallePage implements OnInit {
       console.log('Reparación modificada correctamente!');
       // Limpiar datos de pantalla
       this.reparacionEditando = {} as Reparacion;
+      this.pasarPrimeraPantalla();
     })
   }
 
