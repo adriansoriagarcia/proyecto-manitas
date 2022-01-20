@@ -110,6 +110,7 @@ export class DetallePage implements OnInit {
             this.firestoreService.borrar("reparaciones", this.document.id).then(() => {
               // Actualizar la lista completa
               this.obtenerListaReparaciones();
+              this.borrarImagen();
               console.log('Reparación borrada correctamente!');
               // Limpiar datos de pantalla
               this.reparacionEditando = {} as Reparacion;
