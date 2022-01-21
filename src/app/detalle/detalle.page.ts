@@ -83,6 +83,7 @@ export class DetallePage implements OnInit {
         this.document.data = resultado.payload.data();
         // Como ejemplo, mostrar el nombre del cliente en consola
         console.log(this.document.data.nombre + this.document.data.imagen);
+        //console.log(this.imageURL)
       } else {
         // No se ha encontrado un document con ese ID. Vaciar los datos que hubiera
         this.document.data = {} as Reparacion;
@@ -107,10 +108,10 @@ export class DetallePage implements OnInit {
           text: 'Si',
           handler: () => {
             console.log('si');
+            this.borrarImagen();
             this.firestoreService.borrar("reparaciones", this.document.id).then(() => {
               // Actualizar la lista completa
-              this.obtenerListaReparaciones();
-              this.borrarImagen();
+              this.obtenerListaReparaciones(); 
               console.log('Reparación borrada correctamente!');
               // Limpiar datos de pantalla
               this.reparacionEditando = {} as Reparacion;
@@ -178,7 +179,7 @@ export class DetallePage implements OnInit {
                       //En la variable downloadUrl se tiene la direccion de descarga de la imágen
                       console.log("downloadURL:" + downloadUrl);
                       this.document.data.imagen=downloadUrl;
-                      this.imageURL = downloadUrl;
+                      this.imageURL = this.document.data.imagen;
                       //Mostrar el mensaje de finalización de la subida
                       toast.present();
                       //ocultar mensaje de espera
@@ -198,19 +199,22 @@ export class DetallePage implements OnInit {
   }
 
   private borrarImagen() {
-    this.deleteFile(this.imageURL);
-    this.imageURL = null;
+    console.log("entra en borrar")
+    console.log(this.document.data.imagen)
+    this.deleteFile(this.document.data.imagen);
+    this.document.data.imagen = null;
   }
 
   async deleteFile(fileURL) {
     console.log("entra en delete")
+    console.log(fileURL)
     const toast = await this.toastController.create({
       message: 'File was deleted successfully',
       duration: 3000
     });
     this.firestoreService.deleteFileFromURL(fileURL)
       .then(() => {
-        this.document.data.imagen = "";
+        this.document.data.imagen = null;
         toast.present();
       }, (err) => {
         console.log(err);
