@@ -29,16 +29,17 @@
   </ion-item>
   <ion-item>
     <ion-label>Imagen</ion-label>
-    <ion-button color="light" (click)="uploadImagePicker()">
+    <ion-button color="light" (click)="seleccionarImagen()">
       <ion-icon name="add"></ion-icon></ion-button>
     <ion-button color="light" (click)="borrarImagen()">
       <ion-icon name="close"></ion-icon></ion-button>
-    <img class="imagenes" src="{{document.data.imagen}}" *ngIf="this.document.data.imagen != null">
+    <img class="imagenes" src="{{imagenTempSrc}}" *ngIf="this.document.data.imagen != null">
   </ion-item>
   
   <ion-button color="light" (click)="clicBotonInsertar()" *ngIf="this.document.id == ''">
     <ion-icon name="add-circle-outline"></ion-icon>Añadir reparación</ion-button>
   <ion-list > 
+    <ion-button color="light" (click)="guardarDatos()">Guardar cambios en BD</ion-button>
     <ion-button color="light" (click)="clicBotonModificar()" *ngIf="this.document.id == this.id">
       <ion-icon name="layers-outline"></ion-icon>Modificar reparación</ion-button>
     <ion-button color="light" (click)="clicBotonBorrar()" *ngIf="this.document.id == this.id">

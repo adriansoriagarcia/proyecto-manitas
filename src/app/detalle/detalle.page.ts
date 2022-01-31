@@ -18,6 +18,15 @@ import { ImagePicker } from '@awesome-cordova-plugins/image-picker/ngx';
 
 export class DetallePage implements OnInit {
 
+   // Imagen que se va a mostrar en la página
+   imagenTempSrc: String;
+
+   subirArchivoImagen: boolean = false;
+   borrarArchivoImagen: boolean = false;
+
+   // Nombre de la colección en Firestore Database
+  reparacciones: String = "EjemploImagenes";
+
   reparacionEditando: Reparacion; 
 
   id:string="";
@@ -81,6 +90,7 @@ export class DetallePage implements OnInit {
       if(resultado.payload.data() != null) {
         this.document.id = resultado.payload.id
         this.document.data = resultado.payload.data();
+        this.imagenTempSrc = this.document.data.imagenURL;
         // Como ejemplo, mostrar el nombre del cliente en consola
         console.log(this.document.data.nombre + this.document.data.imagen);
         //console.log(this.imageURL)
@@ -108,7 +118,6 @@ export class DetallePage implements OnInit {
           text: 'Si',
           handler: () => {
             console.log('si');
-            this.borrarImagen();
             this.firestoreService.borrar("reparaciones", this.document.id).then(() => {
               // Actualizar la lista completa
               this.obtenerListaReparaciones(); 
@@ -137,55 +146,27 @@ export class DetallePage implements OnInit {
     })
   }
 
-  async uploadImagePicker() {
-    //Mensaje de espera mientras se sube la imagen
-    const loading = await this.loadingController.create({
-      message: 'Please waiut...'
-    })
-    //Mensaje de finalización de subida de la imagen
-    const toast = await this.toastController.create({
-      message: 'Image was update successfully',
-      duration: 3000
-    })
-    //Comprobar si la aplicación tiene permisos de lectura
+  async seleccionarImagen() {
+    // Comprobar si la aplicación tiene permisos de lectura
     this.imagePicker.hasReadPermission().then(
       (result) => {
-        //Si no tiene permiso de lectura se solicita al usuario
-        if(result == false) {
+        // Si no tiene permiso de lectura se solicita al usuario
+        if(result == false){
           this.imagePicker.requestReadPermission();
         }
         else {
-          //Abrir selector de imágenes (ImagePicker)
-          this.imagePicker.getPictures ({
-            maximumImagesCount: 1, //Permitir solo 1 imágen
-            outputType: 1 //1 = base64
-          }).then (
-            (results) => { //En la variable results se tienen las imágenes seleccionadas
-              //Carpera del Storage donde se almacenará la imágen
-              let nombreCarpeta = "imagenes";
-              //recorrer todas las imágenes que haya seleccionado el usuario
-              //Aunque realmente sólo será 1 como se ha indicado en las opciones
-              for(var i = 0; i< results.length; i++) {
-                //Mostrar el mensaje de espera
-                loading.present();
-                //Asignar el nombre de la imágen en función de la hora actual para 
-                // evitar duplicidades de nombres
-                let nombreImagen = `${new Date().getTime()}`;
-                //Llamar al método que sube la imágen al Storage
-                this.firestoreService.uploadImage(nombreCarpeta, nombreImagen, results[i]
-                  ).then(snapshot => {
-                    snapshot.ref.getDownloadURL()
-                    .then(downloadUrl => {
-                      //En la variable downloadUrl se tiene la direccion de descarga de la imágen
-                      console.log("downloadURL:" + downloadUrl);
-                      this.document.data.imagen=downloadUrl;
-                      this.imageURL = this.document.data.imagen;
-                      //Mostrar el mensaje de finalización de la subida
-                      toast.present();
-                      //ocultar mensaje de espera
-                      loading.dismiss();
-                    })
-                  })
+          // Abrir selector de imágenes (ImagePicker)
+          this.imagePicker.getPictures({
+            maximumImagesCount: 1,  // Permitir sólo 1 imagen
+            outputType: 1           // 1 = Base64
+          }).then(
+            (results) => {  // En la variable results se tienen las imágenes seleccionadas
+              if(results.length > 0) { // Si el usuario ha elegido alguna imagen
+                this.imagenTempSrc = "data:image/jpeg;base64,"+results[0];
+                console.log("Imagen que se ha seleccionado (en Base64): " + this.imagenTempSrc);
+                // Se informa que se ha cambiado para que se suba la imagen cuando se actualice la BD
+                this.subirArchivoImagen = true;
+                this.borrarArchivoImagen = false;
               }
             },
             (err) => {
@@ -198,26 +179,92 @@ export class DetallePage implements OnInit {
       });
   }
 
-  private borrarImagen() {
-    console.log("entra en borrar")
-    console.log(this.document.data.imagen)
-    this.deleteFile(this.document.data.imagen);
-    this.document.data.imagen = null;
+  public guardarDatos() {
+    if(this.subirArchivoImagen) {
+      // Borrar el archivo de la imagen antigua si la hubiera
+      if(this.document.data.imagenURL != null) {
+        this.eliminarArchivo(this.document.data.imagenURL);        
+      }
+      // Si la imagen es nueva se sube como archivo y se actualiza la BD
+      this.subirImagenActualizandoBD();
+    } else {
+      if(this.borrarArchivoImagen) {
+        this.eliminarArchivo(this.document.data.imagenURL);        
+        this.document.data.imagenURL = null;
+      }
+      // Si no ha cambiado la imagen no se sube como archivo, sólo se actualiza la BD
+      this.actualizarBaseDatos();
+    }
   }
 
-  async deleteFile(fileURL) {
-    console.log("entra en delete")
-    console.log(fileURL)
+  async subirImagenActualizandoBD(){
+    // Mensaje de espera mientras se sube la imagen
+    const loading = await this.loadingController.create({
+      message: 'Please wait...'
+    });
+    // Mensaje de finalización de subida de la imagen
+    const toast = await this.toastController.create({
+      message: 'Image was updated successfully',
+      duration: 3000
+    });
+
+    // Carpeta del Storage donde se almacenará la imagen
+    let nombreCarpeta = "imagenes";
+
+    // Mostrar el mensaje de espera
+    loading.present();
+    // Asignar el nombre de la imagen en función de la hora actual para
+    //  evitar duplicidades de nombres         
+    let nombreImagen = `${new Date().getTime()}`;
+    // Llamar al método que sube la imagen al Storage
+    this.firestoreService.subirImagenBase64(nombreCarpeta, nombreImagen, this.imagenTempSrc)
+      .then(snapshot => {
+        snapshot.ref.getDownloadURL()
+          .then(downloadURL => {
+            // En la variable downloadURL se tiene la dirección de descarga de la imagen
+            console.log("downloadURL:" + downloadURL);
+            //this.document.data.imagenURL = downloadURL;            
+            // Mostrar el mensaje de finalización de la subida
+            toast.present();
+            // Ocultar mensaje de espera
+            loading.dismiss();
+
+            // Una vez que se ha termninado la subida de la imagen 
+            //    se actualizan los datos en la BD
+            this.document.data.imagenURL = downloadURL;
+            this.actualizarBaseDatos();
+          })
+      })    
+  } 
+
+  public borrarImagen() {
+    // No mostrar ninguna imagen en la página
+    this.imagenTempSrc = null;
+    // Se informa que no se debe subir ninguna imagen cuando se actualice la BD
+    this.subirArchivoImagen = false;
+    this.borrarArchivoImagen = true;
+  }
+
+  async eliminarArchivo(fileURL) {
     const toast = await this.toastController.create({
       message: 'File was deleted successfully',
       duration: 3000
     });
-    this.firestoreService.deleteFileFromURL(fileURL)
+    this.firestoreService.borrarArchivoPorURL(fileURL)
       .then(() => {
-        this.document.data.imagen = null;
         toast.present();
       }, (err) => {
         console.log(err);
       });
   }
+
+  private actualizarBaseDatos() {    
+    console.log("Guardando en la BD: ");
+    console.log(this.document.data);
+    this.firestoreService.actualizar(this.reparacciones, this.document.id, this.document.data);
+  }
+
+
+
+ 
 }
