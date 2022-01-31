@@ -33,7 +33,7 @@
       <ion-icon name="add"></ion-icon></ion-button>
     <ion-button color="light" (click)="borrarImagen()">
       <ion-icon name="close"></ion-icon></ion-button>
-    <img class="imagenes" src="{{imagenTempSrc}}" *ngIf="this.document.data.imagen != null">
+    <img class="imagenes" src="{{document.data.imagen}}" *ngIf="this.document.data.imagen != null">
   </ion-item>
   
   <ion-button color="light" (click)="clicBotonInsertar()" *ngIf="this.document.id == ''">

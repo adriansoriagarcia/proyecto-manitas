@@ -90,14 +90,14 @@ export class DetallePage implements OnInit {
       if(resultado.payload.data() != null) {
         this.document.id = resultado.payload.id
         this.document.data = resultado.payload.data();
-        this.imagenTempSrc = this.document.data.imagenURL;
+        this.imagenTempSrc = this.document.data.imagen;
         // Como ejemplo, mostrar el nombre del cliente en consola
         console.log(this.document.data.nombre + this.document.data.imagen);
         //console.log(this.imageURL)
       } else {
         // No se ha encontrado un document con ese ID. Vaciar los datos que hubiera
         this.document.data = {} as Reparacion;
-        console.log(this.document.data.imagen)
+        //console.log(this.document.data.imagen)
       } 
     });
   }
@@ -163,6 +163,7 @@ export class DetallePage implements OnInit {
             (results) => {  // En la variable results se tienen las imágenes seleccionadas
               if(results.length > 0) { // Si el usuario ha elegido alguna imagen
                 this.imagenTempSrc = "data:image/jpeg;base64,"+results[0];
+                //this.document.data.imagen=this.imagenTempSrc;
                 console.log("Imagen que se ha seleccionado (en Base64): " + this.imagenTempSrc);
                 // Se informa que se ha cambiado para que se suba la imagen cuando se actualice la BD
                 this.subirArchivoImagen = true;
@@ -182,15 +183,15 @@ export class DetallePage implements OnInit {
   public guardarDatos() {
     if(this.subirArchivoImagen) {
       // Borrar el archivo de la imagen antigua si la hubiera
-      if(this.document.data.imagenURL != null) {
-        this.eliminarArchivo(this.document.data.imagenURL);        
+      if(this.document.data.imagen != null) {
+        this.eliminarArchivo(this.document.data.imagen);        
       }
       // Si la imagen es nueva se sube como archivo y se actualiza la BD
       this.subirImagenActualizandoBD();
     } else {
       if(this.borrarArchivoImagen) {
-        this.eliminarArchivo(this.document.data.imagenURL);        
-        this.document.data.imagenURL = null;
+        this.eliminarArchivo(this.document.data.imagen);        
+        this.document.data.imagen = null;
       }
       // Si no ha cambiado la imagen no se sube como archivo, sólo se actualiza la BD
       this.actualizarBaseDatos();
@@ -231,7 +232,7 @@ export class DetallePage implements OnInit {
 
             // Una vez que se ha termninado la subida de la imagen 
             //    se actualizan los datos en la BD
-            this.document.data.imagenURL = downloadURL;
+            this.document.data.imagen = downloadURL;
             this.actualizarBaseDatos();
           })
       })    
