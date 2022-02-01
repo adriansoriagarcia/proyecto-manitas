@@ -118,6 +118,8 @@ export class DetallePage implements OnInit {
           text: 'Si',
           handler: () => {
             console.log('si');
+            this.borrarImagen();
+            this.guardarDatos();
             this.firestoreService.borrar("reparaciones", this.document.id).then(() => {
               // Actualizar la lista completa
               this.obtenerListaReparaciones(); 
