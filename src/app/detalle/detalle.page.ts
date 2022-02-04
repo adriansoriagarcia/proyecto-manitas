@@ -278,7 +278,7 @@ export class DetallePage implements OnInit {
   ShareGeneric(parameter){
     const url = this.link
     const text = this.text  + this.document.data.precio
-    this.socialSharing.share(text, 'REPARACIÓN', null, url)
+    this.socialSharing.share(this.document.data.nombre, 'REPARACIÓN', null,  this.document.data.imagen)
   }
 
 
