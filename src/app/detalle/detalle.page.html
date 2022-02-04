@@ -46,4 +46,23 @@
     <ion-button color="light" (click)="clicBotonBorrar()" *ngIf="this.document.id == this.id">
       <ion-icon name="trash-outline"></ion-icon></ion-button>
   </ion-list>
+  <ion-col size="2">
+    <ion-button color="warning" (click)="ShareEmail()" *ngIf="this.document.id == this.id">
+      <ion-icon name="mail-outline"></ion-icon></ion-button>
+  </ion-col>
+  <ion-col size="2">
+    <ion-button color="primary" (click)="ShareFacebook()" *ngIf="this.document.id == this.id">
+      <ion-icon name="logo-facebook"></ion-icon></ion-button>
+  </ion-col>
+  <ion-col size="2">
+    <ion-button  color="secondary" (click)="SendTwitter()" *ngIf="this.document.id == this.id">
+      <ion-icon name="logo-twitter"></ion-icon></ion-button>
+  </ion-col>      
+  <ion-col size="2">
+    <ion-button color="success" (click)="ShareWhatsapp()" *ngIf="this.document.id == this.id">
+      <ion-icon name="logo-whatsapp"></ion-icon></ion-button>
+  </ion-col> 
+  <ion-col size="2">
+    <ion-button color="light" (click)="ShareGeneric('text')"><ion-icon name="share-social-outline"></ion-icon></ion-button>
+  </ion-col>
 </ion-content>

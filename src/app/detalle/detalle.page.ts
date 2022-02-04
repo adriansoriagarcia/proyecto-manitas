@@ -9,6 +9,10 @@ import { Router } from '@angular/router';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { ImagePicker } from '@awesome-cordova-plugins/image-picker/ngx';
 
+import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
+//import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+
+
 
 @Component({
   selector: 'app-detalle',
@@ -61,7 +65,8 @@ export class DetallePage implements OnInit {
     private loadingController: LoadingController,
     private toastController: ToastController,
     private imagePicker: ImagePicker,
-    private router:Router
+    private router:Router,
+    private socialSharing: SocialSharing
     ) {
     console.log(this.id)
     this.reparacionEditando = {} as Reparacion;
@@ -92,7 +97,7 @@ export class DetallePage implements OnInit {
         this.document.data = resultado.payload.data();
         this.imagenTempSrc = this.document.data.imagen;
         // Como ejemplo, mostrar el nombre del cliente en consola
-        console.log(this.document.data.nombre + this.document.data.imagen);
+        console.log(this.document.data.imagen);
         //console.log(this.imageURL)
       } else {
         // No se ha encontrado un document con ese ID. Vaciar los datos que hubiera
@@ -267,7 +272,43 @@ export class DetallePage implements OnInit {
     this.firestoreService.actualizar(this.reparacciones, this.document.id, this.document.data);
   }
 
+  text: string='Precio'
+  link: string='https://ionicframework.com/'
+
+  ShareGeneric(parameter){
+    const url = this.link
+    const text = this.text  + this.document.data.precio
+    this.socialSharing.share(text, 'REPARACIÓN', null, url)
+  }
 
 
+
+  ShareFacebook(){
+    console.log(this.imagenTempSrc)
+    this.socialSharing.shareViaFacebookWithPasteMessageHint(this.text + this.document.data.precio,  this.document.data.imagen, null /* url */, 'Compartiendo!')
+  }
+
+  SendTwitter(){
+    this.socialSharing.shareViaTwitter(this.text + this.document.data.precio,  this.document.data.imagen, this.link)
+  }
+
+  ShareWhatsapp(){
+    this.socialSharing.shareViaWhatsApp(this.text, this.document.data.imagen, this.link)
+  }
+
+  ShareEmail(){
+    // Check if sharing via email is supported
+    this.socialSharing.canShareViaEmail().then(() => {
+      // Sharing via email is possible
+    }).catch(() => {
+      // Sharing via email is not possible
+    });
+    // Share via email
+    this.socialSharing.shareViaEmail(this.text + this.document.data.precio, 'Reparación', ['reparaciones@example.org']).then(() => {
+      // Success!
+    }).catch(() => {
+      // Error!
+    });
+  }
  
 }

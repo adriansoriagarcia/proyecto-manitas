@@ -15,6 +15,10 @@ import { ImagePicker } from '@awesome-cordova-plugins/image-picker/ngx';
 
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
+//Importamos nuestro Social Sharing plugin 
+//import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -23,7 +27,9 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     AngularFireStorageModule,
     AngularFirestoreModule],
   providers: [
+    SocialSharing,
     ImagePicker,
+    
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
