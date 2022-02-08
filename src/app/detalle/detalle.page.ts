@@ -281,34 +281,5 @@ export class DetallePage implements OnInit {
     this.socialSharing.share(this.document.data.nombre, 'REPARACIÓN', null,  this.document.data.imagen)
   }
 
-
-
-  ShareFacebook(){
-    console.log(this.imagenTempSrc)
-    this.socialSharing.shareViaFacebookWithPasteMessageHint(this.text + this.document.data.precio,  this.document.data.imagen, null /* url */, 'Compartiendo!')
-  }
-
-  SendTwitter(){
-    this.socialSharing.shareViaTwitter(this.text + this.document.data.precio,  this.document.data.imagen, this.link)
-  }
-
-  ShareWhatsapp(){
-    this.socialSharing.shareViaWhatsApp(this.text, this.document.data.imagen, this.link)
-  }
-
-  ShareEmail(){
-    // Check if sharing via email is supported
-    this.socialSharing.canShareViaEmail().then(() => {
-      // Sharing via email is possible
-    }).catch(() => {
-      // Sharing via email is not possible
-    });
-    // Share via email
-    this.socialSharing.shareViaEmail(this.text + this.document.data.precio, 'Reparación', ['reparaciones@example.org']).then(() => {
-      // Success!
-    }).catch(() => {
-      // Error!
-    });
-  }
  
 }
