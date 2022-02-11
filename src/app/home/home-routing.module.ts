@@ -6,7 +6,15 @@ const routes: Routes = [
   {
     path: '',
     component: HomePage,
-  }
+  },
+  {
+    path: 'anadir',
+    redirectTo:'/detalle/nuevo',
+  },
+  {
+    path: 'acerca',
+    redirectTo:'/informacion',
+  },
 ];
 
 @NgModule({

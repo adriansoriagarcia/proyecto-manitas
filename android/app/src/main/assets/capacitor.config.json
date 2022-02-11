@@ -4,6 +4,6 @@
 	"webDir": "www",
 	"bundledWebRuntime": false,
 	"server": {
-		"url": "http://192.168.80.108:8100"
+		"url": "http://192.168.80.112:8100"
 	}
 }
