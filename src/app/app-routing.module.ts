@@ -16,6 +16,10 @@ const routes: Routes = [
     loadChildren: () => import('./detalle/detalle.module').then( m => m.DetallePageModule)
   },
   {
+    path: 'anadir',
+    loadChildren: () => import('./detalle/detalle.module').then( m => m.DetallePageModule)
+  },
+  {
     path: 'informacion',
     loadChildren: () => import('./informacion/informacion.module').then( m => m.InformacionPageModule)
   },
