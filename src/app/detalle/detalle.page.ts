@@ -78,11 +78,6 @@ export class DetallePage implements OnInit {
     this.router.navigate(['home'])
   }
 
-  
-  clicVolver() {
-
-    this.router.navigate(['home']);
-  }
 
    clicBotonInsertar() {
     this.firestoreService.insertar("reparaciones", this.document.data).then(() => {

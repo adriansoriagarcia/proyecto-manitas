@@ -3,7 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { CallNumber } from '@awesome-cordova-plugins/call-number/ngx';
-//import { CallNumber } from '@ionic-native/call-number';
+
+//import {Map, tileLayer} from 'leaflet';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-informacion',
@@ -12,6 +14,7 @@ import { CallNumber } from '@awesome-cordova-plugins/call-number/ngx';
 })
 export class InformacionPage implements OnInit {
 
+  map: L.Map;
   constructor(private router:Router,private callNumber:CallNumber) { }
 
   llamada(){
@@ -25,11 +28,18 @@ export class InformacionPage implements OnInit {
     this.router.navigate(['home'])
   }
 
-  llamar(){
-    this.callNumber.callNumber("18001010101", true)
-  .then(res => console.log('Launched dialer!', res))
-  .catch(err => console.log('Error launching dialer', err));
+  ionViewDidEnter(){
+    this.loadMap();
+  }
 
+  loadMap() {
+    let latitud = 36.922349;
+    let longitud = -5.541855;
+    let zoom = 17;
+    this.map = L.map("mapId").setView([latitud, longitud], zoom);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
+        .addTo(this.map);
+    L.marker([ 36.922349,-5.541855],{draggable: true}).addTo(this.map);
   }
   
 
