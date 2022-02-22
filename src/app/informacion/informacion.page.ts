@@ -33,13 +33,19 @@ export class InformacionPage implements OnInit {
   }
 
   loadMap() {
+    var customIcon = new L.Icon({
+      iconUrl: 'https://img.icons8.com/color/48/000000/google-maps-new.png',
+      iconSize: [50, 50],
+      iconAnchor: [25, 50]
+    });
     let latitud = 36.922349;
     let longitud = -5.541855;
     let zoom = 17;
     this.map = L.map("mapId").setView([latitud, longitud], zoom);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
         .addTo(this.map);
-    L.marker([ 36.922349,-5.541855],{draggable: true}).addTo(this.map);
+    L.marker([ 36.922349,-5.541855],{icon: customIcon}).bindPopup("<p>Nos encontramos en la calle Torre Gailín Nº80</p>").addTo(this.map);
+    
   }
   
 
