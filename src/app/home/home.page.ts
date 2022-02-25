@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { FirestoreService } from '../firestore.service';
 import { Reparacion } from '../reparacion';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { LoadingController } from '@ionic/angular';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-home',
@@ -9,6 +12,10 @@ import { Router } from '@angular/router';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+
+  userEmail: String = "";
+  userUID: String = "";
+  isLogged: boolean;
 
   reparacionEditando: Reparacion; 
   filtro: string = '';
@@ -30,7 +37,11 @@ export class HomePage {
     });
   }
 
-  constructor(private firestoreService: FirestoreService, private router:Router) {
+  constructor(private firestoreService: FirestoreService, 
+    private router:Router,
+    public loadingCtrl: LoadingController,
+    private authService: AuthService,
+    public afAuth: AngularFireAuth) {
     // Crear una reparacion vacía
     this.obtenerListaReparaciones();
     this.reparacionEditando = {} as Reparacion;
@@ -54,6 +65,31 @@ export class HomePage {
     this.reparacionEditando.lugar = reparacionSelec.data.precio;
     this.reparacionEditando.imagen = reparacionSelec.data.imagen;
     this.router.navigate(['/detalle', this.idReparacionSelec]);
+  }
+
+  ionViewDidEnter() {
+    this.isLogged = false;
+    this.afAuth.user.subscribe(user => {
+      if(user){
+        this.userEmail = user.email;
+        this.userUID = user.uid;
+        this.isLogged = true;
+      }
+    })
+  }
+
+  login() {
+    this.router.navigate(["/login"]);
+  }
+
+  logout(){
+    this.authService.doLogout()
+    .then(res => {
+      this.userEmail = "";
+      this.userUID = "";
+      this.isLogged = false;
+      console.log(this.userEmail);
+    }, err => console.log(err));
   }
 
 }
