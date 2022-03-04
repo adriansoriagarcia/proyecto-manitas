@@ -74,6 +74,8 @@ export class HomePage {
         this.userEmail = user.email;
         this.userUID = user.uid;
         this.isLogged = true;
+      } else {
+        this.router.navigate(["/home"]);
       }
     })
   }
@@ -91,5 +93,7 @@ export class HomePage {
       console.log(this.userEmail);
     }, err => console.log(err));
   }
+
+
 
 }

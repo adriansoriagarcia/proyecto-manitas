@@ -12,6 +12,8 @@ import { ImagePicker } from '@awesome-cordova-plugins/image-picker/ngx';
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 //import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+
 
 
 @Component({
@@ -35,6 +37,10 @@ export class DetallePage implements OnInit {
 
   id:string="";
   imageURL: String;
+
+  userEmail: String = "";
+  userUID: String = "";
+  isLogged: boolean;
 
 
   document: any = {
@@ -66,7 +72,8 @@ export class DetallePage implements OnInit {
     private toastController: ToastController,
     private imagePicker: ImagePicker,
     private router:Router,
-    private socialSharing: SocialSharing
+    private socialSharing: SocialSharing,
+    public afAuth: AngularFireAuth
     ) {
     console.log(this.id)
     this.reparacionEditando = {} as Reparacion;
@@ -106,6 +113,7 @@ export class DetallePage implements OnInit {
         //console.log(this.document.data.imagen)
       } 
     });
+    
   }
 
   clicBotonBorrar() {
@@ -280,6 +288,19 @@ export class DetallePage implements OnInit {
     const url = this.link
     const text = this.text  + this.document.data.precio
     this.socialSharing.share(this.document.data.nombre, 'REPARACIÓN', null,  this.document.data.imagen)
+  }
+
+  ionViewDidEnter() {
+    this.isLogged = false;
+    this.afAuth.user.subscribe(user => {
+      if(user){
+        this.userEmail = user.email;
+        this.userUID = user.uid;
+        this.isLogged = true;
+      } else {
+        this.router.navigate(["/home"]);
+      }
+    })
   }
 
  

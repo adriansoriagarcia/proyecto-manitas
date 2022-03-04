@@ -3,8 +3,11 @@
     <ion-title>
       Proyecto manitas
     </ion-title>
-    <ion-button class="login" (click)="login()" color="dark">
+    <ion-button class="login" (click)="login()" color="dark" *ngIf=" this.userUID == ''">
       <ion-icon name="log-in-outline"></ion-icon>
+    </ion-button>
+    <ion-button class="login" (click)="logout()" color="dark" *ngIf=" this.userUID != ''">
+      <ion-icon name="log-out-outline"></ion-icon>
     </ion-button>
   </ion-toolbar>
 </ion-header>
@@ -12,9 +15,9 @@
 <ion-content [fullscreen]="true">
   <ion-searchbar showCancelButton="never" [(ngModel)]="filtro"></ion-searchbar>
   <h1>LISTA DE REPARACIONES</h1>
-    <ion-fab vertical="bottom" horizontal="end" color="primary" slot="fixed">
+    <!--<ion-fab vertical="bottom" horizontal="end" color="primary" slot="fixed">
       <ion-fab-button (click)="pasarSegudaPantalla()"><ion-icon name="add-circle-outline"></ion-icon></ion-fab-button>
-    </ion-fab>
+    </ion-fab>-->
       <ion-grid class="contenido">
       <ion-row>
         <ng-container *ngFor="let documentReparacion of arrayColeccionReparaciones">
@@ -49,7 +52,7 @@
 <ion-toolbar>
   <ion-tabs>
     <ion-tab-bar >
-      <ion-tab-button tab="anadir">
+      <ion-tab-button tab="anadir" *ngIf=" this.userUID != ''">
         <ion-icon name="add-circle-outline"></ion-icon>
         <ion-label>Añadir</ion-label>
       </ion-tab-button>
@@ -58,7 +61,6 @@
         <ion-icon name="information-circle-outline"></ion-icon>
         <ion-label>Acerca de</ion-label>
       </ion-tab-button>
-
     </ion-tab-bar>
   </ion-tabs>
 </ion-toolbar>
