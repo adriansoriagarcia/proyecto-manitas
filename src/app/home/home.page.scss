@@ -49,7 +49,7 @@
 ion-content{ --ion-background-color:#63a4ff; }
 
 ion-header{
-   --ion-background-color:#3364FF; 
+   --ion-background-color:#3364FF;
   }
 ion-fab-button {
   --color:black;
@@ -59,10 +59,18 @@ ion-searchbar {
   --background:rgba(255, 255, 255, 0.774);
 
 }
-
+.usuario{
+  margin-left: 70%;
+  margin-top: -28px;
+  color: black;
+}
 .login{
   float: right;
   margin-top: -30px;
+}
+
+ion-title {
+  color: black;
 }
 
 

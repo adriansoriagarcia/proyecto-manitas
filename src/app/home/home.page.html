@@ -3,6 +3,7 @@
     <ion-title>
       Proyecto manitas
     </ion-title>
+    <p class="usuario">Usuario: {{ usuario }}</p>
     <ion-button class="login" (click)="login()" color="dark" *ngIf=" this.userUID == ''">
       <ion-icon name="log-in-outline"></ion-icon>
     </ion-button>
@@ -48,6 +49,7 @@
       </ion-fab-list>
     </ion-fab>
 </ion-content>
+
 
 <ion-toolbar>
   <ion-tabs>

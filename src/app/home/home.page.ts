@@ -12,7 +12,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-
+  usuario: String = "";
   userEmail: String = "";
   userUID: String = "";
   isLogged: boolean;
@@ -72,6 +72,9 @@ export class HomePage {
     this.afAuth.user.subscribe(user => {
       if(user){
         this.userEmail = user.email;
+        var email_analizado = /^([^]+)@(\w+).(\w+)$/.exec(user.email);
+        this.usuario=email_analizado[1];
+        console.log(this.usuario)
         this.userUID = user.uid;
         this.isLogged = true;
       } else {
