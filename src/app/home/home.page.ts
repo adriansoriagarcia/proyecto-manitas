@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild  } from '@angular/core';
 import { FirestoreService } from '../firestore.service';
 import { Reparacion } from '../reparacion';
 import { Router } from '@angular/router';
@@ -6,12 +6,14 @@ import { AuthService } from '../services/auth.service';
 import { LoadingController } from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+
   usuario: String = "";
   userEmail: String = "";
   userUID: String = "";
@@ -24,6 +26,8 @@ export class HomePage {
     id: "",
     data: {} as Reparacion
    }];
+
+   
 
    obtenerListaReparaciones(){
     this.firestoreService.consultar("reparaciones").subscribe((resultadoConsultaReparaciones) => {
@@ -92,6 +96,7 @@ export class HomePage {
     .then(res => {
       this.userEmail = "";
       this.userUID = "";
+      this.usuario="";
       this.isLogged = false;
       console.log(this.userEmail);
     }, err => console.log(err));

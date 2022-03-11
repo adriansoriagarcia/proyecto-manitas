@@ -62,5 +62,9 @@ export class RegisterPage implements OnInit {
     this.router.navigate(["/login"]);
   }
 
+  pasarPrimeraPantalla () {
+    this.router.navigate(['home'])
+  }
+
 
 }
