@@ -38,9 +38,9 @@ export class DetallePage implements OnInit {
   id:string="";
   imageURL: String;
 
-  userEmail: String = "";
-  userUID: String = "";
-  isLogged: boolean;
+  userEmail: String = "";//variable para almacenar el email del usuario.
+  userUID: String = "";//variable para almacenar el uid del usuario.
+  isLogged: boolean;//variable que indica si esta logueado o no.
 
 
   document: any = {
@@ -52,7 +52,7 @@ export class DetallePage implements OnInit {
     id: "",
     data: {} as Reparacion
    }];
-
+//método que obtiene las reparaciones de la base de datos
    obtenerListaReparaciones(){
     this.firestoreService.consultar("reparaciones").subscribe((resultadoConsultaReparaciones) => {
       this.arrayColeccionReparaciones = [];
@@ -80,12 +80,12 @@ export class DetallePage implements OnInit {
     this.obtenerListaReparaciones();
     
    };
-
+//método que redirecciona a la página home.
    pasarPrimeraPantalla () {
     this.router.navigate(['home'])
   }
 
-
+  //método que inserta en firebase la reparación 
    clicBotonInsertar() {
     this.firestoreService.insertar("reparaciones", this.document.data).then(() => {
       console.log('Reparación creada correctamente!');
@@ -115,7 +115,7 @@ export class DetallePage implements OnInit {
     });
     
   }
-
+  //método que borra en firebase la reparación 
   clicBotonBorrar() {
     this.alertController.create({
       header: 'ALERTA',
@@ -150,7 +150,7 @@ export class DetallePage implements OnInit {
     });
     
   }
-
+  //método que modifica en firebase la reparación 
   clicBotonModificar() {
     this.firestoreService.actualizar("reparaciones", this.document.id, this.document.data).then(() => {
       // Actualizar la lista completa
@@ -161,7 +161,7 @@ export class DetallePage implements OnInit {
       this.pasarPrimeraPantalla();
     })
   }
-
+ //método asincrono que selecciona una imágen del dispositivo movil.
   async seleccionarImagen() {
     // Comprobar si la aplicación tiene permisos de lectura
     this.imagePicker.hasReadPermission().then(
@@ -195,7 +195,7 @@ export class DetallePage implements OnInit {
         console.log(err);
       });
   }
-
+ //método encargado de guardar la imágen seleccionada
   public guardarDatos() {
     if(this.subirArchivoImagen) {
       // Borrar el archivo de la imagen antigua si la hubiera
@@ -213,7 +213,7 @@ export class DetallePage implements OnInit {
       this.actualizarBaseDatos();
     }
   }
-
+ //método asincrono que sube la imágen y actualiza la base de datos.
   async subirImagenActualizandoBD(){
     // Mensaje de espera mientras se sube la imagen
     const loading = await this.loadingController.create({
@@ -253,7 +253,7 @@ export class DetallePage implements OnInit {
           })
       })    
   } 
-
+ //método que borra la imágen seleccionada anteriormente.
   public borrarImagen() {
     // No mostrar ninguna imagen en la página
     this.imagenTempSrc = null;
@@ -261,7 +261,7 @@ export class DetallePage implements OnInit {
     this.subirArchivoImagen = false;
     this.borrarArchivoImagen = true;
   }
-
+  //método que elimina el archivo por la url indicada.
   async eliminarArchivo(fileURL) {
     const toast = await this.toastController.create({
       message: 'File was deleted successfully',
@@ -274,7 +274,7 @@ export class DetallePage implements OnInit {
         console.log(err);
       });
   }
-
+  //método encargado de actualizar la base de datos.
   private actualizarBaseDatos() {    
     console.log("Guardando en la BD: ");
     console.log(this.document.data);
@@ -283,13 +283,13 @@ export class DetallePage implements OnInit {
 
   text: string='Precio'
   link: string='https://ionicframework.com/'
-
+  //método para compartir por redes sociales(en este caso es el generico).
   ShareGeneric(parameter){
     const url = this.link
     const text = this.text  + this.document.data.precio
     this.socialSharing.share(this.document.data.nombre, 'REPARACIÓN', null,  this.document.data.imagen)
   }
-
+  //método encargado del inicio de sesión del usuario.
   ionViewDidEnter() {
     this.isLogged = false;
     this.afAuth.user.subscribe(user => {

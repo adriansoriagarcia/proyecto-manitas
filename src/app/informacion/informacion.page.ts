@@ -16,22 +16,22 @@ export class InformacionPage implements OnInit {
 
   map: L.Map;
   constructor(private router:Router,private callNumber:CallNumber) { }
-
+  //método para la llamada al numero indicado desde un botón.
   llamada(){
     this.callNumber.callNumber('3521234567', true)
     .then(() => console.log('Llamada exitosa!'))
     .catch(() => console.log('Error al intentar llamar'));
  
 }
-
+  //método encargado en redirigir a la pantalla home.
   pasarPrimeraPantalla () {
     this.router.navigate(['home'])
   }
-
+  //método que se activa cuando el enrutamiento del componente ha terminado de animarse.
   ionViewDidEnter(){
     this.loadMap();
   }
-
+  //método para el diseño y opciones del mapa.
   loadMap() {
     var customIcon = new L.Icon({
       iconUrl: 'https://img.icons8.com/color/48/000000/google-maps-new.png',

@@ -14,13 +14,13 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 })
 export class HomePage {
 
-  usuario: String = "";
-  userEmail: String = "";
-  userUID: String = "";
-  isLogged: boolean;
+  usuario: String = "";//variable para almacenar el usuario.
+  userEmail: String = "";//variable para almacenar el email del usuario.
+  userUID: String = "";//variable para almacenar el uid del usuario.
+  isLogged: boolean;//variable que indica si esta logueado o no.
 
   reparacionEditando: Reparacion; 
-  filtro: string = '';
+  filtro: string = '';//variable utilizada en el filtro de busqueda.
   
   arrayColeccionReparaciones: any = [{
     id: "",
@@ -28,7 +28,7 @@ export class HomePage {
    }];
 
    
-
+   //método que obtiene las reparaciones de la base de datos
    obtenerListaReparaciones(){
     this.firestoreService.consultar("reparaciones").subscribe((resultadoConsultaReparaciones) => {
       this.arrayColeccionReparaciones = [];
@@ -53,12 +53,12 @@ export class HomePage {
   }
 
   idReparacionSelec: string;
-
+  //método que redirecciona a la página detalle.
   pasarSegudaPantalla () {
     this.router.navigate(['detalle/:id'])
   }
 
-
+  //método que selecciona la reparacion y te redirecciona a detalle con la información correspondiente.
   selecReparacion(reparacionSelec) {
     console.log("Reparacion seleccionada: ");
     console.log(reparacionSelec);
@@ -70,7 +70,7 @@ export class HomePage {
     this.reparacionEditando.imagen = reparacionSelec.data.imagen;
     this.router.navigate(['/detalle', this.idReparacionSelec]);
   }
-
+  //método encargado del inicio de sesión del usuario.
   ionViewDidEnter() {
     this.isLogged = false;
     this.afAuth.user.subscribe(user => {
@@ -86,11 +86,11 @@ export class HomePage {
       }
     })
   }
-
+  //método que redirecciona a la página de login
   login() {
     this.router.navigate(["/login"]);
   }
-
+  //método que cierra sesion del usuario.
   logout(){
     this.authService.doLogout()
     .then(res => {
